@@ -1,0 +1,42 @@
+# 🍳 瘋狂早餐大冒險 (Crazy Breakfast Adventure)
+
+這是一個專為台灣國小四年級學生設計的**「AI 英語口說互動遊戲」**開源專案。
+透過情境式的選擇題與即時語音辨識，鼓勵學生開口練習英語句型。當任務完成後，系統會結合 Google Gemini AI 動態生成一段誇張、搞笑的專屬驚喜結局，極大地提升學生的學習動機與期待感！
+
+## ✨ 核心特色 (Features)
+
+* **🗣️ 即時語音辨識通關**：利用瀏覽器內建 Web Speech API，學生必須正確唸出英文句子才能推進遊戲，打造真實的開口環境。
+* **🎲 AI 湧現式結局 (盲盒體驗)**：後端串接 Gemini API，根據學生選擇的「食物」與「飲料」，每次動態生成符合國小單字範圍的爆笑情境結局（無魔法、無科幻，主打現實生活中的荒謬感）。
+* **🎧 沉浸式聽力訓練**：全畫面整合 TTS (Text-to-Speech) 語音朗讀，結局播放支援「暫停/繼續」與「重新發音」，聽說讀一次滿足。
+* **⚡ 輕量化架構**：前端使用純 HTML/CSS/Vanilla JS，無須安裝複雜的 Node.js 環境或前端框架；後端採用 Google Apps Script (GAS) 零成本無伺服器架構。
+
+## 🛠️ 技術棧 (Tech Stack)
+
+* **前端**：HTML5, CSS3, JavaScript (Web Speech API, SpeechSynthesis)
+* **後端**：Google Apps Script (GAS)
+* **AI 引擎**：Google Gemini 1.5 Flash API (透過 GAS 中介層呼叫)
+
+---
+
+## 🚀 快速部署指南 (Installation & Setup)
+
+要將這套系統部署到你自己的環境，請依序完成以下「後端」與「前端」的設定：
+
+### 第一階段：架設 GAS 後端大腦
+1. 取得 **Gemini API Key**：前往 [Google AI Studio](https://aistudio.google.com/) 申請一把免費的 API 金鑰。
+2. 建立 **Google Apps Script**：在你的 Google 雲端硬碟新增一個 Apps Script 專案。
+3. 貼上程式碼：將本專案目錄下的 `Code.gs` 內容複製並貼到你的 GAS 專案中。
+4. 安全設定金鑰：
+   * 點擊 GAS 左側齒輪圖示 ⚙️ 進入「專案設定」。
+   * 捲動到底部找到「指令碼屬性」，點擊「新增指令碼屬性」。
+   * 屬性名稱輸入 `GEMINI_API_KEY`，值貼上你剛剛申請的 API Key，點擊儲存。
+5. 發布網頁應用程式：
+   * 點擊右上角「部署」 -> 「新增部署作業」。
+   * 類型選「網頁應用程式」，執行身分選「我」，誰可以存取選**「所有人」**。
+   * 部署完成後，**複製那串以 `/exec` 結尾的「網頁應用程式網址」**。
+
+### 第二階段：設定前端網頁
+1. 將本專案 Clone 到你的本機電腦。
+2. 打開 `index.html`，尋找程式碼中的這行變數（大約在 `<script>` 標籤的最上方）：
+   ```javascript
+   const GAS_WEB_APP_URL = "你的_GAS_網頁應用程式網址_請貼在這裡";
